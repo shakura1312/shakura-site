@@ -21,8 +21,10 @@
   color-scheme: light dark;
 }
 
+/* Dark colours: follow the device setting unless the visitor picked a mode with the footer toggle
+   (theme.js sets data-theme on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #000;
     --fg: #fff;
     --muted: #a8a8a8;
@@ -30,6 +32,15 @@
     --accent: #40ad48;
   }
 }
+:root[data-theme="dark"] {
+  --bg: #000;
+  --fg: #fff;
+  --muted: #a8a8a8;
+  --rule: #333;
+  --accent: #40ad48;
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -191,6 +202,13 @@ img { display: block; max-width: 100%; height: auto; }
   font-size: 0.95rem;
 }
 .foot p { margin: 0 0 0.25rem; }
+.theme { margin-top: 0.75rem; color: var(--muted); }
+.theme button {
+  font: inherit; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer;
+}
+.theme button[aria-pressed="true"] { color: var(--fg); text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+.theme button:hover { color: var(--accent); }
+.theme button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* ---------- small screens ---------- */
 

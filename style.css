@@ -147,7 +147,15 @@ img { display: block; max-width: 100%; height: auto; }
 
 /* Project pages open on the title and images; the green "info →" reveals the metadata and text.
    A plain <details>, so it works without JavaScript. */
-.info { margin-top: 1rem; }
+/* It sticks to the top of the window while the images scroll beneath it, on a page-coloured band.
+   Open, the text runs the full width; a long text scrolls inside the band rather than covering the screen. */
+.info {
+  position: sticky; top: 0; z-index: 2;
+  margin-top: 1rem; padding: 0.5rem 0;
+  background: var(--bg);
+}
+.info[open] { max-height: 70vh; overflow-y: auto; }
+.info .prose { max-width: none; }
 .info summary {
   display: inline-block; cursor: pointer; list-style: none;
   color: var(--accent); font-style: italic;

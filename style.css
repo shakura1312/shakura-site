@@ -114,8 +114,7 @@ img { display: block; max-width: 100%; height: auto; }
 .rows.plain li .desc { grid-column: 3; }
 
 .pubs li { display: block; max-width: 52rem; }
-.pubs a { text-decoration: none; font-weight: 600; }
-.pubs a:hover { text-decoration: underline; }
+.pubs a { font-style: italic; }  /* citations, styled like the CV PDF */
 
 /* ---------- project / text pages ---------- */
 

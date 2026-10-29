@@ -131,6 +131,7 @@ img { display: block; max-width: 100%; height: auto; }
 
 .prose { max-width: 62ch; margin-top: 2rem; font-size: 1.0625rem; line-height: 1.55; }
 .prose p { margin: 0 0 1.1em; }
+.prose:not(.lead):not(.contact) p { text-align: justify; hyphens: auto; }  /* hyphens keep narrow phone lines from gapping */
 .prose a { text-decoration: underline; }
 .prose.lead { max-width: 36em; font-size: clamp(1.25rem, 2.3vw, 1.8rem); line-height: 1.3; letter-spacing: -0.005em; }
 .prose.contact { margin-top: 1.5rem; font-size: 1rem; }

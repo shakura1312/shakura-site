@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://shakura.ca/sitemap.xml
+Sitemap: https://www.shakura.ca/sitemap.xml

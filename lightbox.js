@@ -1,39 +1,55 @@
-// Click a project image to see it enlarged over the blurred page. Closes with the green "close ✕",
-// a click outside the image, or Esc. Without JavaScript the images simply aren't clickable.
-// Images inside links (the ARC1031 cow, which opens the booklet PDF) keep their link instead.
+// Click a project image to see it enlarged over the blurred page, then step through the project's images
+// like a carousel: the green ← → arrows, the arrow keys, or a swipe on a phone (it wraps around at the ends).
+// Closes with the green "close ✕", a click outside the image, or Esc. Without JavaScript the images simply
+// aren't clickable. Images inside links (the ARC1031 cow, which opens the booklet PDF) keep their link instead.
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
-    var images = document.querySelectorAll('.gallery img');
+    var images = [].filter.call(document.querySelectorAll('.gallery img'), function (img) { return !img.closest('a'); });
     if (!images.length || !window.HTMLDialogElement) return;
 
     var box = document.createElement('dialog');
     box.className = 'lightbox';
     box.setAttribute('aria-label', 'Enlarged image');
-    box.innerHTML = '<button type="button" class="lightbox-close">close ✕</button><img alt="">';
+    box.innerHTML = '<button type="button" class="lightbox-close">close ✕</button>' +
+      '<button type="button" class="lightbox-prev" aria-label="Previous image">←</button>' +
+      '<button type="button" class="lightbox-next" aria-label="Next image">→</button><img alt="">';
     document.body.appendChild(box);
     var big = box.querySelector('img');
+    if (images.length < 2) box.classList.add('single');
 
     function close() { box.close(); }
     box.querySelector('.lightbox-close').addEventListener('click', close);
-    // The dialog is only as big as the image, so a click on it that isn't on the image or button is the backdrop.
+    box.querySelector('.lightbox-prev').addEventListener('click', function () { step(-1); });
+    box.querySelector('.lightbox-next').addEventListener('click', function () { step(1); });
+    // The dialog is only as big as the image, so a click on it that isn't on the image or a button is the backdrop.
     box.addEventListener('click', function (e) { if (e.target === box) close(); });
     box.addEventListener('close', function () { big.removeAttribute('src'); });
+    box.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+    var touchX = null;
+    box.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    });
 
-    for (var i = 0; i < images.length; i++) {
-      var img = images[i];
-      if (img.closest('a')) continue;
+    images.forEach(function (img, i) {
       img.classList.add('zoomable');
       img.tabIndex = 0;
-      img.addEventListener('click', open);
+      img.addEventListener('click', function () { open(i); });
       img.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open.call(this); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
       });
-    }
+    });
 
     // Size: as large as fits with a 20px margin on every side, even if that means scaling the image up.
     // That is always well over 15% larger than the grid image, except where the grid image already
     // nearly fills the screen (a lone image on a phone); there the 20px margin wins.
-    var MARGIN = 20, ratio = 1;
+    var MARGIN = 20, ratio = 1, current = 0;
     function fit() {
       var w = Math.min(document.documentElement.clientWidth - 2 * MARGIN,
                        (window.innerHeight - 2 * MARGIN) * ratio);
@@ -42,12 +58,18 @@
     }
     window.addEventListener('resize', function () { if (box.open) fit(); });
 
-    function open() {
-      ratio = (+this.getAttribute('width') || this.naturalWidth) / (+this.getAttribute('height') || this.naturalHeight);
-      big.src = this.currentSrc || this.src;
-      big.alt = this.alt;
-      box.showModal();
+    function show(i) {
+      current = (i + images.length) % images.length;
+      var img = images[current];
+      ratio = (+img.getAttribute('width') || img.naturalWidth) / (+img.getAttribute('height') || img.naturalHeight);
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
       fit();
+    }
+    function step(d) { show(current + d); }
+    function open(i) {
+      box.showModal();
+      show(i);
     }
   });
 })();

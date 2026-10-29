@@ -201,14 +201,19 @@ img { display: block; max-width: 100%; height: auto; }
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
 }
 .lightbox img { display: block; max-width: none; }
-.lightbox-close {
-  /* Sits over the image's top-right corner, on a page-coloured tab so it stays readable on any image. */
-  position: fixed; top: 20px; right: 20px; z-index: 1;
+.lightbox button {
+  /* Close and the carousel arrows sit over the image on page-coloured tabs, so they stay readable on any image. */
+  position: fixed; z-index: 1;
   font: inherit; font-size: var(--large); font-style: italic; color: var(--accent);
   background: var(--bg); border: 0; padding: 0.1rem 0.6rem 0.2rem; cursor: pointer;
 }
-.lightbox-close:hover { color: var(--fg); }
-.lightbox-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.lightbox-close { top: 20px; right: 20px; }
+.lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); font-style: normal; }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox.single .lightbox-prev, .lightbox.single .lightbox-next { display: none; }
+.lightbox button:hover { color: var(--fg); }
+.lightbox button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 html:has(.lightbox[open]) { overflow: hidden; }  /* page stays put behind the enlarged image */
 
 .pager {

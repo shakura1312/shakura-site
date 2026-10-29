@@ -170,7 +170,8 @@ img { display: block; max-width: 100%; height: auto; }
 .gallery img.zoomable { cursor: zoom-in; }
 .gallery img.zoomable:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-/* Enlarged view (lightbox.js): the image at 40% of the screen width, over the blurred page. */
+/* Enlarged view (lightbox.js): the image as large as fits 20px inside the screen edges (lightbox.js sets its
+   width and height), over the blurred page. */
 .lightbox {
   border: 0; padding: 0; margin: auto; background: transparent;
   max-width: none; max-height: none; overflow: visible;
@@ -179,11 +180,12 @@ img { display: block; max-width: 100%; height: auto; }
   background: color-mix(in srgb, var(--bg) 45%, transparent);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
 }
-.lightbox img { display: block; width: auto; height: auto; max-width: 40vw; max-height: 80vh; }
+.lightbox img { display: block; max-width: none; }
 .lightbox-close {
-  position: fixed; top: var(--pad); right: var(--pad);
+  /* Sits over the image's top-right corner, on a page-coloured tab so it stays readable on any image. */
+  position: fixed; top: 20px; right: 20px; z-index: 1;
   font: inherit; font-size: var(--large); font-style: italic; color: var(--accent);
-  background: none; border: 0; padding: 0.25rem; cursor: pointer;
+  background: var(--bg); border: 0; padding: 0.1rem 0.6rem 0.2rem; cursor: pointer;
 }
 .lightbox-close:hover { color: var(--fg); }
 .lightbox-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -253,8 +255,8 @@ html:has(.lightbox[open]) { overflow: hidden; }  /* page stays put behind the en
   .gallery figure { flex: var(--r, 1) 1 0; margin-bottom: 0.5rem; }
   .gallery .br { display: block; flex-basis: 100%; height: 0; }
   .gallery::after { display: none; }
-  .lightbox img { max-width: 92vw; }  /* 40% of a phone screen would be smaller than the grid image */
-}
+  /* A lone last image keeps half-width like the rest, so its enlarged view can still be bigger than the grid. */
+  .gallery figure:nth-of-type(odd):last-of-type { flex: 0 1 calc(50% - 0.25rem); }}
 
 @media print {
   .top nav, .skip, .pager { display: none; }

@@ -30,10 +30,24 @@
       });
     }
 
+    // Size: as large as fits with a 20px margin on every side, even if that means scaling the image up.
+    // That is always well over 15% larger than the grid image, except where the grid image already
+    // nearly fills the screen (a lone image on a phone); there the 20px margin wins.
+    var MARGIN = 20, ratio = 1;
+    function fit() {
+      var w = Math.min(document.documentElement.clientWidth - 2 * MARGIN,
+                       (window.innerHeight - 2 * MARGIN) * ratio);
+      big.style.width = w + 'px';
+      big.style.height = w / ratio + 'px';
+    }
+    window.addEventListener('resize', function () { if (box.open) fit(); });
+
     function open() {
+      ratio = (+this.getAttribute('width') || this.naturalWidth) / (+this.getAttribute('height') || this.naturalHeight);
       big.src = this.currentSrc || this.src;
       big.alt = this.alt;
       box.showModal();
+      fit();
     }
   });
 })();

@@ -167,6 +167,27 @@ img { display: block; max-width: 100%; height: auto; }
   max-width: none !important;  /* overrides the per-image max-width in older HTML */
   background: color-mix(in srgb, var(--fg) 7%, transparent);
 }
+.gallery img.zoomable { cursor: zoom-in; }
+.gallery img.zoomable:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Enlarged view (lightbox.js): the image at 40% of the screen width, over the blurred page. */
+.lightbox {
+  border: 0; padding: 0; margin: auto; background: transparent;
+  max-width: none; max-height: none; overflow: visible;
+}
+.lightbox::backdrop {
+  background: color-mix(in srgb, var(--bg) 45%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+.lightbox img { display: block; width: auto; height: auto; max-width: 40vw; max-height: 80vh; }
+.lightbox-close {
+  position: fixed; top: var(--pad); right: var(--pad);
+  font: inherit; font-size: var(--large); font-style: italic; color: var(--accent);
+  background: none; border: 0; padding: 0.25rem; cursor: pointer;
+}
+.lightbox-close:hover { color: var(--fg); }
+.lightbox-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+html:has(.lightbox[open]) { overflow: hidden; }  /* page stays put behind the enlarged image */
 
 .pager {
   display: flex; justify-content: space-between; gap: 2rem;
@@ -232,6 +253,7 @@ img { display: block; max-width: 100%; height: auto; }
   .gallery figure { flex: var(--r, 1) 1 0; margin-bottom: 0.5rem; }
   .gallery .br { display: block; flex-basis: 100%; height: 0; }
   .gallery::after { display: none; }
+  .lightbox img { max-width: 92vw; }  /* 40% of a phone screen would be smaller than the grid image */
 }
 
 @media print {

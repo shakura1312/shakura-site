@@ -190,7 +190,7 @@ img { display: block; max-width: 100%; height: auto; }
 .gallery img.zoomable { cursor: zoom-in; }
 .gallery img.zoomable:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-/* Enlarged view (lightbox.js): the image as large as fits 20px inside the screen edges (lightbox.js sets its
+/* Enlarged view (lightbox.js): the image as large as fits 60px inside the screen edges (lightbox.js sets its
    width and height), over the blurred page. */
 .lightbox {
   border: 0; padding: 0; margin: auto; background: transparent;

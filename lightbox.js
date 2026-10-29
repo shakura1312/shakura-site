@@ -46,13 +46,16 @@
       });
     });
 
-    // Size: as large as fits with a 20px margin on every side, even if that means scaling the image up.
-    // That is always well over 15% larger than the grid image, except where the grid image already
-    // nearly fills the screen (a lone image on a phone); there the 20px margin wins.
-    var MARGIN = 20, ratio = 1, current = 0;
+    // Size: as large as fits with a 60px margin on every side, even if that means scaling the image up.
+    // The enlarged image must also be at least 15% larger than in the grid; for the few very wide images
+    // that already nearly fill the page width, the margin shrinks as needed, but never below 20px.
+    var MARGIN = 60, MIN_MARGIN = 20, ratio = 1, current = 0;
+    function fitWidth(m) {
+      return Math.min(document.documentElement.clientWidth - 2 * m, (window.innerHeight - 2 * m) * ratio);
+    }
     function fit() {
-      var w = Math.min(document.documentElement.clientWidth - 2 * MARGIN,
-                       (window.innerHeight - 2 * MARGIN) * ratio);
+      var want = images[current].getBoundingClientRect().width * 1.15;
+      var w = Math.max(fitWidth(MARGIN), Math.min(fitWidth(MIN_MARGIN), want));
       big.style.width = w + 'px';
       big.style.height = w / ratio + 'px';
     }

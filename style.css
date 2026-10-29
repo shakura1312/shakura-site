@@ -1,0 +1,215 @@
+/* nathan shakura: plain HTML portfolio. No frameworks, no scripts. One self-hosted font (Crimson Text, OFL). */
+
+@font-face { font-family: "Crimson Text"; src: url("fonts/CrimsonText-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Crimson Text"; src: url("fonts/CrimsonText-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Crimson Text"; src: url("fonts/CrimsonText-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Crimson Text"; src: url("fonts/CrimsonText-SemiBoldItalic.ttf") format("truetype"); font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: "Crimson Text"; src: url("fonts/CrimsonText-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Crimson Text"; src: url("fonts/CrimsonText-BoldItalic.ttf") format("truetype"); font-weight: 700; font-style: italic; font-display: swap; }
+
+:root {
+  --bg: #fff;
+  --fg: #000;
+  --muted: #595959;
+  --rule: #d4d4d4;
+  --accent: #40ad48;
+  --body: 1.125rem;
+  --large: calc(var(--body) * 1.3);  /* wordmark and large statement text */
+  --pad: clamp(1rem, 3vw, 2.5rem);
+  --code-col: 4.5rem;
+  --title-col: minmax(0, 24rem);
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000;
+    --fg: #fff;
+    --muted: #a8a8a8;
+    --rule: #333;
+    --accent: #40ad48;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Crimson Text", Georgia, "Times New Roman", serif;
+  font-size: var(--body);
+  line-height: 1.45;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1; padding: 0 var(--pad); width: 100%; max-width: 100rem; margin: 0 auto; }
+
+::selection { background: var(--accent); color: #000; }
+
+a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+b, strong { font-weight: 600; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+.skip {
+  position: absolute; left: var(--pad); top: -4rem;
+  background: var(--fg); color: var(--bg); padding: 0.5rem 0.75rem; z-index: 10;
+}
+.skip:focus { top: 0.5rem; }
+
+/* ---------- header ---------- */
+
+.top {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 0.5rem 2rem;
+  padding: var(--pad);
+  max-width: 100rem; margin: 0 auto; width: 100%;
+}
+.name {
+  font-size: var(--large); font-style: italic; text-decoration: none;
+  color: var(--accent); margin-right: auto;
+}
+.name:hover { color: var(--fg); }
+.top nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; color: var(--fg); }
+
+/* ---------- home ---------- */
+
+.statement { padding: clamp(2.5rem, 9vw, 7rem) 0 clamp(3rem, 8vw, 6rem); }
+.statement p {
+  margin: 0; max-width: 30em;
+  font-size: var(--large);
+  line-height: 1.3; letter-spacing: 0; font-weight: 400;
+}
+
+.list { margin-bottom: clamp(3rem, 7vw, 5rem); }
+.list h2 {
+  margin: 0 0 0.75rem; font-size: 1rem; font-weight: 600;
+}
+
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li {
+  display: grid;
+  grid-template-columns: var(--code-col) var(--title-col) minmax(0, 1fr);
+  gap: 0.25rem 1.5rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--rule);
+}
+.rows li:last-child { border-bottom: 1px solid var(--rule); }
+.code { color: var(--muted); font-variant-numeric: tabular-nums; }
+.title { font-weight: 600; text-decoration: none; }
+.title:hover { text-decoration: underline; }
+.desc { color: var(--muted); max-width: 46rem; }
+
+.rows.plain li .title { grid-column: 2; }
+.rows.plain li .desc { grid-column: 3; }
+
+.pubs li { display: block; max-width: 52rem; }
+.pubs a { text-decoration: none; font-weight: 600; }
+.pubs a:hover { text-decoration: underline; }
+
+/* ---------- project / text pages ---------- */
+
+.project { padding-top: clamp(1.5rem, 5vw, 4rem); }
+
+.phead h1 {
+  margin: 0; max-width: 18em;
+  font-size: 1.375rem;  /* two sizes above the 18px body */
+  line-height: 1.2; font-style: italic; font-weight: 600;
+}
+.meta { margin-top: 1.25rem; color: var(--muted); }
+.meta p { margin: 0; }
+
+.prose { max-width: 62ch; margin-top: 2rem; font-size: 1.0625rem; line-height: 1.55; }
+.prose p { margin: 0 0 1.1em; }
+.prose a { text-decoration: underline; }
+.prose.lead { max-width: 36em; font-size: clamp(1.25rem, 2.3vw, 1.8rem); line-height: 1.3; letter-spacing: -0.005em; }
+.prose.contact { margin-top: 1.5rem; font-size: 1rem; }
+.prose.contact p { margin-bottom: 0.3em; }
+
+.gallery {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  --row: 18rem;  /* target row height; rows stretch slightly from this to fill the width */
+  display: flex; flex-wrap: wrap; gap: 1rem;
+}
+/* Justified rows, no cropping: each figure grows in proportion to its width/height (--r, written by
+   make-web-images.py), so every image in a row ends up the same height and the row fills the width. */
+.gallery figure {
+  margin: 0;
+  flex: var(--r, 1) 1 calc(var(--r, 1) * var(--row));
+}
+.gallery::after { content: ""; flex: 1e6 1 0; }  /* keeps the last row from stretching */
+@media (max-width: 1100px) { .gallery { --row: 11rem; } }
+.gallery img {
+  width: 100%;
+  max-width: none !important;  /* overrides the per-image max-width in older HTML */
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+}
+
+.pager {
+  display: flex; justify-content: space-between; gap: 2rem;
+  margin: clamp(3rem, 7vw, 5rem) 0 0; padding: 1.1rem 0 0;
+  border-top: 1px solid var(--rule);
+  font-weight: 600;
+}
+.pager a { text-decoration: none; max-width: 22rem; }
+.pager a:hover { text-decoration: underline; }
+.pager a::before { display: block; font-weight: 400; color: var(--muted); }
+.pager .prev::before { content: "Previous"; }
+.pager .next::before { content: "Next"; }
+.pager .next { margin-left: auto; text-align: right; }
+
+/* ---------- CV ---------- */
+
+.cvsec { margin-top: 2.75rem; max-width: 60rem; }
+.cvsec h2 { margin: 0 0 0.6rem; font-size: 1rem; font-weight: 600; }
+.cvsec ul { list-style: none; margin: 0; padding: 0; }
+.cvsec li {
+  display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 0 1.5rem;
+  padding: 0.6rem 0; border-top: 1px solid var(--rule);
+}
+.cvsec li.sub { display: block; padding: 0.15rem 0 0.35rem 13.5rem; border-top: 0; color: var(--muted); }
+.cvsec .when { color: var(--muted); }
+
+/* ---------- footer ---------- */
+
+.foot {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 2rem;
+  margin-top: clamp(4rem, 9vw, 7rem);
+  padding: 1.25rem var(--pad) 2.5rem;
+  border-top: 1px solid var(--rule);
+  width: 100%; max-width: 100rem; align-self: center;
+  font-size: 0.95rem;
+}
+.foot p { margin: 0 0 0.25rem; }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 760px) {
+  :root { --code-col: 3.25rem; }
+  .top nav { width: 100%; max-width: 24rem; justify-content: space-between; gap: 0.25rem 0.5rem; font-size: 1rem; }
+  .rows li { grid-template-columns: var(--code-col) minmax(0, 1fr); gap: 0.15rem 1rem; }
+  .rows li .desc { grid-column: 2; }
+  .rows.plain li .title { grid-column: 1 / -1; }
+  .rows.plain li .desc { grid-column: 1 / -1; }
+  .cvsec li { grid-template-columns: 1fr; }
+  .cvsec li.sub { padding-left: 1rem; }
+  .foot { grid-template-columns: 1fr; }
+  .pager { flex-direction: column; gap: 1.25rem; }
+  .pager .next { margin-left: 0; text-align: left; }
+  .gallery figure { flex: 1 1 100%; }
+}
+
+@media print {
+  .top nav, .skip, .pager { display: none; }
+  body { color: #000; background: #fff; }
+}

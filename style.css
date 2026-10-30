@@ -141,10 +141,10 @@ img { display: block; max-width: 100%; height: auto; }
   border-top: 1px solid var(--fg); border-bottom: 1px solid var(--fg);
   font-size: clamp(2rem, 4.6vw, 4.2rem); line-height: 1.1;
   font-weight: 600; font-style: italic; letter-spacing: -0.01em;
-  white-space: nowrap; overflow-x: auto; scrollbar-width: none;
+  white-space: nowrap; overflow-x: auto;
+  scrollbar-width: thin; scrollbar-color: var(--muted) transparent;  /* a thin bar shows it scrolls */
   scroll-margin-top: 1rem;
 }
-.headline::-webkit-scrollbar { display: none; }
 .headline span { color: var(--muted); font-weight: 400; font-style: normal; }
 .headline a { text-decoration: none; }
 .headline a:hover { text-decoration: underline; text-decoration-thickness: 2px; }

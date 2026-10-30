@@ -4,6 +4,18 @@
 // Without JavaScript the card stays hidden.
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
+    // The "Projects:" headline scrolls sideways. A mouse wheel only scrolls up and down, so over the
+    // headline it moves the titles sideways instead, until they reach either end; then the page scrolls.
+    var line = document.querySelector('.headline');
+    if (line) line.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;  // trackpads already scroll sideways
+      var max = line.scrollWidth - line.clientWidth;
+      if ((e.deltaY > 0 && line.scrollLeft < max - 1) || (e.deltaY < 0 && line.scrollLeft > 0)) {
+        e.preventDefault();
+        line.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+
     var card = document.querySelector('.feature');
     var items = document.querySelectorAll('.grid li');
     if (!card || !items.length) return;

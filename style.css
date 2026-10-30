@@ -130,14 +130,14 @@ img { display: block; max-width: 100%; height: auto; }
 
 /* ---------- home: headline, image grid, bouncing card ---------- */
 
-/* A thin rule under the header, as on the reference's bars */
-.home .top { border-bottom: 1px solid var(--fg); max-width: none; }
+/* A thin rule under the header, as on the reference's bars, spanning only the content width (same edges as the grid) */
+.home .top { background: linear-gradient(var(--fg), var(--fg)) no-repeat center bottom / calc(100% - 2 * var(--pad)) 1px; }
 .home .statement { padding: clamp(2rem, 6vw, 4.5rem) 0; }
 
 /* Run-off headline: muted label, then every project title (italic SemiBold) as a link to its grid
    item. Scrolls sideways rather than wrapping. */
 .headline {
-  margin: 0 calc(-1 * var(--pad)); padding: 0.1em var(--pad) 0.15em;
+  margin: 0; padding: 0.1em 0 0.15em;
   border-top: 1px solid var(--fg); border-bottom: 1px solid var(--fg);
   font-size: clamp(2rem, 4.6vw, 4.2rem); line-height: 1.1;
   font-weight: 600; font-style: italic; letter-spacing: -0.01em;

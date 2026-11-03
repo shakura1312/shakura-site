@@ -220,6 +220,8 @@ img { display: block; max-width: 100%; height: auto; }
 .prose p { margin: 0 0 1.1em; }
 /* All running text is justified; hyphens keep narrow phone lines from gapping. Single-line paragraphs are unaffected. */
 .prose p, .statement p { text-align: justify; hyphens: auto; }
+.statement p + p { margin-top: 0.8em; }
+.statement a { text-decoration: underline; text-underline-offset: 0.15em; }
 .prose a { text-decoration: underline; }
 
 /* Project pages open on the title and images; the green "info →" reveals the metadata and text.

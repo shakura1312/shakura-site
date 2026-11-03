@@ -4,6 +4,16 @@
 // Without JavaScript the card stays hidden.
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
+    // The phone number is assembled here rather than written in the page, so most scrapers never see it.
+    // Without JavaScript only the email shows.
+    var phone = document.querySelector('.statement .phone');
+    if (phone) {
+      var digits = ['613', '355', '2876'], a = document.createElement('a');
+      a.href = 'tel:+1' + digits.join('');
+      a.textContent = '+1 ' + digits.join(' ');
+      phone.append(document.createElement('br'), a);
+    }
+
     // The "Projects:" headline scrolls sideways. A mouse wheel only scrolls up and down, so over the
     // headline it moves the titles sideways instead, until they reach either end; then the page scrolls.
     var line = document.querySelector('.headline');
